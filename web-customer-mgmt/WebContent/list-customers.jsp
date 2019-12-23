@@ -5,12 +5,6 @@
 <head>
 	<title>Customer Tracker App</title>
 	<link type="text/css" rel="stylesheet" href="css/style.css">
-	<style>
-		th, td {
-			padding: 10px;
-			text-align: center;
-		}
-	</style>
 </head>
 <%
 	// get students from the request object (sent by servlet)
@@ -18,12 +12,12 @@
 %>
 <body>
 	<div id="wrapper">
-		<div id="header" style="padding: 15px;">
+		<div id="header">
 			<h2>George Mason Univ. Info. Science and Tech. Dept.</h2>
 		</div>
-		<div id="container" style="padding: 15px;">
+		<div id="container">
 			<div id="content">
-				<table border="1">
+				<table>
 					<tr>
 						<th>First Name</th>
 						<th>Last Name</th>

@@ -27,8 +27,8 @@ tr:nth-child(even) {background: #FFFFFF}
 tr:nth-child(odd) {background: #BBBBBB}	
  
 #wrapper {width: 100%; margin-top: 0px; }
-#header {width: 72%; background: #56b000; margin-top: 0px; padding:15px 0px 15px 0px;}
-#header h2 {width: 100%; margin:auto; color: #FFFFFF;}
+#header {width: 72%; background: #56b000; margin-top: 0px; padding:15 0 15 15px;}
+#header h2 {width: 100%; margin:auto; color: #FFFFFF; padding: 15px 0; text-align: center; }
 #container {width: 100%; margin:auto}
 #container h3 {color: #000;}
 #container #content {margin-top: 20px;}
