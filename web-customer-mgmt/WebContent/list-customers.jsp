@@ -1,16 +1,25 @@
-<%@ page import="java.util.*, edu.gmu.web.jdbc.*" %>
+<%-- the following is needed only for JSP Scriptlet code, not for JSTL tags. --%>
+<%-- @ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Customer Tracker App</title>
-	<link type="text/css" rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css" >
 </head>
-<%
+
+<%-- 
+    When we replace JSP Scriptlet code with JSTL tags, we don't need the following codes.
+    For JSTL code will do it for us behind the scene.
+    So, we put the variable, CUSTOMER_LIST directly in <c:forEach> iteration.
+    
 	// get students from the request object (sent by servlet)
-	List<Customer> customers = (List<Customer>) request.getAttribute("CUSTOMER_LIST");
-%>
+	List<Customer> customers = (List<Customer>) request.getAttribute("CUSTOMER_LIST"); 
+--%>
+
 <body>
+	
 	<div id="wrapper">
 		<div id="header">
 			<h2>George Mason Univ. Info. Science and Tech. Dept.</h2>
@@ -23,13 +32,13 @@
 						<th>Last Name</th>
 						<th>Email Address</th>
 					</tr>
-					<% for (Customer aCustomer : customers) { %>
+					<c:forEach var="aCustomer" items="${CUSTOMER_LIST}">
 					<tr>
-						<td> <%= aCustomer.getFirstName() %> </td>
-						<td> <%= aCustomer.getLastName() %> </td>
-						<td> <%= aCustomer.getEmail() %> </td>
+						<td> ${aCustomer.firstName} </td>
+						<td> ${aCustomer.lastName} </td>
+						<td> ${aCustomer.email} </td>
 					</tr>
-					<% } %>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
