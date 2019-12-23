@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title>Customer Tracker App</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<style>
 		th, td {
 			padding: 10px;
@@ -17,10 +18,10 @@
 %>
 <body>
 	<div id="wrapper">
-		<div id="header">
+		<div id="header" style="padding: 15px;">
 			<h2>George Mason Univ. Info. Science and Tech. Dept.</h2>
 		</div>
-		<div id="container">
+		<div id="container" style="padding: 15px;">
 			<div id="content">
 				<table border="1">
 					<tr>
