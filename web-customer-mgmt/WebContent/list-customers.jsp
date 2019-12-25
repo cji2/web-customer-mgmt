@@ -24,8 +24,16 @@
 		<div id="header">
 			<h2>George Mason Univ. Info. Science and Tech. Dept.</h2>
 		</div>
+		<hr/>
 		<div id="container">
 			<div id="content">
+			
+				<!-- put new button to add a customer. -->
+				<input type="button" value="Add Customer"
+			   		   onclick="window.location.href='add-customer-form.jsp'; return false;"
+			   		   class="add-customer-button"
+				/>
+				
 				<table>
 					<tr>
 						<th>First Name</th>
