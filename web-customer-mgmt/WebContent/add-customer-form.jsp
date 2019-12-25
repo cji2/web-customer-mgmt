@@ -37,6 +37,12 @@
 				</tbody>
 			</table>
 		</form>
+		
+		<div style="clear: both;"></div>
+		
+		<p>
+			<a href="CustomerControllerServlet">Back to List</a>
+		</p>
 	</div>
 </body>
 </html>
