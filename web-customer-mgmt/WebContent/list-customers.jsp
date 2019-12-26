@@ -39,13 +39,23 @@
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Email Address</th>
+						<th>Action</th>
 					</tr>
 					<c:forEach var="aCustomer" items="${CUSTOMER_LIST}">
-					<tr>
-						<td> ${aCustomer.firstName} </td>
-						<td> ${aCustomer.lastName} </td>
-						<td> ${aCustomer.email} </td>
-					</tr>
+						<!--  Setup link for each student using JSTL 
+						      It defines a link string assigned to variable: tempLink -->
+						<c:url var="tempLink" value="CustomerControllerServlet" >
+							<c:param name="command" value="LOAD" />
+							<c:param name="studentId" value="${aCustomer.id}" />
+						</c:url>
+						<tr>
+							<td> ${aCustomer.firstName} </td>
+							<td> ${aCustomer.lastName} </td>
+							<td> ${aCustomer.email} </td>
+							<td>
+								<a href="${tempLink}">Update</a>	
+							</td>
+						</tr>
 					</c:forEach>
 				</table>
 			</div>
