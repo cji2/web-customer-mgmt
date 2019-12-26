@@ -47,8 +47,29 @@ public class CustomerControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			// list the students .. in MVC fashion.
-			listCustomers(request, response);
+			/* read the "command" parameter, which is the hidden-type input of
+			   add-customer-form.jsp page and the value is "ADD". */
+			String theCommand = request.getParameter("command");
+			
+			// if the command is missing, then default is listing customers.
+			if (theCommand == null)  
+				theCommand = "LIST";
+			// route to the appropriate method.
+			switch (theCommand) {
+			
+			case "LIST":
+				// list the customers .. in MVC fashion.
+				listCustomers(request, response);
+				break;
+				
+			case "ADD":
+				// add a new customer.
+				addCustomer(request, response);
+				break;
+			
+			default:
+				listCustomers(request, response);
+			}
 		}
 		catch (Exception exc) {
 			throw new ServletException(exc);
@@ -56,6 +77,23 @@ public class CustomerControllerServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// read customer info. from form data.
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+				
+		// create a new customer object.
+		Customer aCustomer = new Customer(firstName, lastName, email);
+		
+		// add the customer to the database.
+		CustomerDbUtil.addCustomer(aCustomer);
+		
+		// send back to main page (the customer list)
+		listCustomers(request, response);
 	}
 
 	private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws Exception {

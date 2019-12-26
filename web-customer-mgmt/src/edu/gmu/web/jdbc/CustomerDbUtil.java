@@ -19,7 +19,7 @@ public class CustomerDbUtil {
 	public CustomerDbUtil(DataSource aDataSource) {
 		dataSource = aDataSource;
 	}
-
+	
 	public static List<Customer> getCustomers() throws Exception {
 		
 		// create an empty array list of Customer.
@@ -85,5 +85,10 @@ public class CustomerDbUtil {
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
+	}
+
+	public static void addCustomer(Customer aCustomer) {
+		// TODO Auto-generated method stub
+		
 	}
 }
