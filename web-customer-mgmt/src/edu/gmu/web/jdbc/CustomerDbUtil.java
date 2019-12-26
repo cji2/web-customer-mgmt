@@ -1,6 +1,7 @@
 package edu.gmu.web.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -87,8 +88,37 @@ public class CustomerDbUtil {
 		}
 	}
 
-	public static void addCustomer(Customer aCustomer) {
-		// TODO Auto-generated method stub
+	public static void addCustomer(Customer aCustomer) throws Exception {
+		
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// get DB connection
+			myConn = dataSource.getConnection();
+			
+			/* Create SQL for insert into customer, which is the name of table. 
+			   we provide column names, and values with place holders (?) */
+			String sql = "insert into customer "
+						+ "(first_name, last_name, email) "
+						+ "values (?, ?, ?)";
+			
+			myStmt = myConn.prepareStatement(sql);
+			
+			/* Set the param values for the customer. 
+			   We already get an object of Customer class as a parameter. 
+			   And the param begins with one, not zero. */
+			myStmt.setString(1, aCustomer.getFirstName());
+			myStmt.setString(2, aCustomer.getLastName());
+			myStmt.setString(3, aCustomer.getEmail());
+			
+			// execute SQL insert.
+			myStmt.execute();
+		}
+		finally {
+			// close JDBC objects, which prevents from memory leak.
+			close(myConn, myStmt, null);
+		}
 		
 	}
 }
