@@ -46,7 +46,7 @@
 						      It defines a link string assigned to variable: tempLink -->
 						<c:url var="tempLink" value="CustomerControllerServlet" >
 							<c:param name="command" value="LOAD" />
-							<c:param name="studentId" value="${aCustomer.id}" />
+							<c:param name="customerId" value="${aCustomer.id}" />
 						</c:url>
 						<tr>
 							<td> ${aCustomer.firstName} </td>
