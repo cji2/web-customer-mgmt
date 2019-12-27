@@ -72,6 +72,10 @@ public class CustomerControllerServlet extends HttpServlet {
 				loadCustomer(request, response);
 				break;
 			
+			case "UPDATE":
+				updateCustomer(request, response);
+				break;
+			
 			default:
 				listCustomers(request, response);
 			}
@@ -82,6 +86,25 @@ public class CustomerControllerServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// read customer info. from form data.
+		String customerId = request.getParameter("customerId");
+		int id = Integer.parseInt(customerId);
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		
+		// create a new customer object.
+		Customer aCustomer = new Customer(id, firstName, lastName, email);
+		
+		// perform update on database.
+		CustomerDbUtil.updateCustomer(aCustomer);
+		
+		// send them back to the "list customers' page.
+		listCustomers(request, response);
 	}
 
 	private void loadCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
