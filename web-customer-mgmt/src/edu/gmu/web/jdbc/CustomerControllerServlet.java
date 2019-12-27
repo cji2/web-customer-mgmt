@@ -67,6 +67,11 @@ public class CustomerControllerServlet extends HttpServlet {
 				addCustomer(request, response);
 				break;
 			
+			case "LOAD":
+				// load a customer with id, which is selected by update link.
+				loadCustomer(request, response);
+				break;
+			
 			default:
 				listCustomers(request, response);
 			}
@@ -77,6 +82,22 @@ public class CustomerControllerServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	private void loadCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read customer id from list-customer.jsp file.
+		String aCustomerId = request.getParameter("customerId");
+		
+		// get a customer from database (CustomerDbUtil.java)
+		Customer aCustomer = CustomerDbUtil.getCustomer(aCustomerId);
+		
+		// place customer in the request attribute.
+		request.setAttribute("THE_CUSTOMER", aCustomer);
+		
+		// send data to JSP page (update-customer-form.jsp)
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-customer-form.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -110,5 +131,4 @@ public class CustomerControllerServlet extends HttpServlet {
 		// forward to JSP.
 		dispatcher.forward(request, response);
 	}
-
 }
