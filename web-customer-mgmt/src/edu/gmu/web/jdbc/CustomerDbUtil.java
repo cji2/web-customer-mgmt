@@ -3,6 +3,7 @@ package edu.gmu.web.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,6 @@ public class CustomerDbUtil {
 		
 		// create an empty array list of Customer.
 		List<Customer> customers = new ArrayList<>();
-		
 		
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -107,7 +107,7 @@ public class CustomerDbUtil {
 			
 			/* Set the param values for the customer. 
 			   We already get an object of Customer class as a parameter. 
-			   And the param begins with one, not zero. */
+			   And the param begins with one, not zero (we have three ?: place holders). */
 			myStmt.setString(1, aCustomer.getFirstName());
 			myStmt.setString(2, aCustomer.getLastName());
 			myStmt.setString(3, aCustomer.getEmail());
@@ -120,5 +120,54 @@ public class CustomerDbUtil {
 			close(myConn, myStmt, null);
 		}
 		
+	}
+
+	public static Customer getCustomer(String aCustomerId) throws Exception {
+		
+		Customer aCustomer = null;
+		int customerId;
+		
+		// JDBC object setting.
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			// convert aCustomerId to int.
+			customerId = Integer.parseInt(aCustomerId);
+			
+			// get connection to database.
+			myConn = dataSource.getConnection();
+			
+			// create SQL to get selected customer (? means place holder).
+			String sql = "select * from customer where id=?";
+					
+			// create prepared statement based on SQL.
+			myStmt = myConn.prepareStatement(sql);
+			
+			// set params (we have only one ?: place holder).
+			myStmt.setInt(1, customerId);
+			
+			// execute statement
+			myRs = myStmt.executeQuery();
+			
+			// retrieve data from result set row.
+			if (myRs.next()) {
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String email = myRs.getString("email");
+				
+				// create a Customer object with the customer id.
+				aCustomer = new Customer(customerId, firstName, lastName, email);
+			}
+			else {
+				throw new Exception("Could not find customer id: " + customerId);
+			}
+			return aCustomer;
+		}
+		finally {
+			// close JDBC objects, which prevents from memory leak.
+			close(myConn, myStmt, myRs);
+		}
 	}
 }
