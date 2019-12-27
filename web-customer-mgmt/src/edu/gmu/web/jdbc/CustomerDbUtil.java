@@ -170,4 +170,37 @@ public class CustomerDbUtil {
 			close(myConn, myStmt, myRs);
 		}
 	}
+
+	public static void updateCustomer(Customer aCustomer) throws Exception {
+		
+		// set up JDBC objects.
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// get DB connection
+			myConn = dataSource.getConnection();
+			
+			// create SQL update statement
+			String sql = "update customer "
+						+ "set first_name=?, last_name=?, email=? "
+						+ "where id=?";
+			
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+			
+			/* Set the params */
+			myStmt.setString(1, aCustomer.getFirstName());
+			myStmt.setString(2, aCustomer.getLastName());
+			myStmt.setString(3, aCustomer.getEmail());
+			myStmt.setInt(4, aCustomer.getId());
+			
+			// execute SQL update.
+			myStmt.execute();
+		}
+		finally {
+			// close JDBC objects, which prevents from memory leak.
+			close(myConn, myStmt, null);
+		}
+	}
 }
