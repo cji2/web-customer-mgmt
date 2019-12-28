@@ -75,6 +75,10 @@ public class CustomerControllerServlet extends HttpServlet {
 			case "UPDATE":
 				updateCustomer(request, response);
 				break;
+				
+			case "DELETE":
+				deleteCustomer(request, response);
+				break;
 			
 			default:
 				listCustomers(request, response);
@@ -86,6 +90,18 @@ public class CustomerControllerServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read customer info. from form data.
+		String aCustomerId = request.getParameter("customerId");
+		
+		// perform delete on database (CustomerDbUtil.java)
+		CustomerDbUtil.deleteCustomer(aCustomerId);
+		
+		// send them back to the "list customers' page.
+		listCustomers(request, response);
 	}
 
 	private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
