@@ -203,4 +203,35 @@ public class CustomerDbUtil {
 			close(myConn, myStmt, null);
 		}
 	}
+
+	public static void deleteCustomer(String aCustomerId) throws Exception {
+		
+		// set up JDBC objects.
+		Connection myConn =   null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			// convert student id (String) to int
+			int studentId = Integer.parseInt(aCustomerId);
+			
+			// get DB connection
+			myConn = dataSource.getConnection();
+			
+			// create SQL update statement, which has four place holders(?)
+			String sql = "delete from customer where id=?";
+			
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+			
+			/* Set the params. */
+			myStmt.setInt(1, studentId);
+			
+			// execute SQL update.
+			myStmt.execute();
+		}
+		finally {
+			// close JDBC objects, which prevents from memory leak.
+			close(myConn, myStmt, null);
+		}
+	}
 }
