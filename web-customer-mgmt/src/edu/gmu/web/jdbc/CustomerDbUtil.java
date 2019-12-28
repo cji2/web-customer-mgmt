@@ -174,14 +174,14 @@ public class CustomerDbUtil {
 	public static void updateCustomer(Customer aCustomer) throws Exception {
 		
 		// set up JDBC objects.
-		Connection myConn = null;
+		Connection myConn =   null;
 		PreparedStatement myStmt = null;
 		
 		try {
 			// get DB connection
 			myConn = dataSource.getConnection();
 			
-			// create SQL update statement
+			// create SQL update statement, which has four place holders(?)
 			String sql = "update customer "
 						+ "set first_name=?, last_name=?, email=? "
 						+ "where id=?";
@@ -189,7 +189,7 @@ public class CustomerDbUtil {
 			// prepare statement
 			myStmt = myConn.prepareStatement(sql);
 			
-			/* Set the params */
+			/* Set the params. */
 			myStmt.setString(1, aCustomer.getFirstName());
 			myStmt.setString(2, aCustomer.getLastName());
 			myStmt.setString(3, aCustomer.getEmail());

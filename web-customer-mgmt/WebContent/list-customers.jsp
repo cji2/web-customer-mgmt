@@ -42,10 +42,16 @@
 						<th>Action</th>
 					</tr>
 					<c:forEach var="aCustomer" items="${CUSTOMER_LIST}">
-						<!--  Setup link for each student using JSTL 
+						<!--  Setup update link for each customer using JSTL 
 						      It defines a link string assigned to variable: tempLink -->
-						<c:url var="tempLink" value="CustomerControllerServlet" >
+						<c:url var="updateLink" value="CustomerControllerServlet" >
 							<c:param name="command" value="LOAD" />
+							<c:param name="customerId" value="${aCustomer.id}" />
+						</c:url>
+						<!--  Setup delete link for each customer using JSTL 
+						      It defines a link string assigned to variable: tempLink2 -->
+						<c:url var="deleteLink" value="CustomerControllerServlet" >
+							<c:param name="command" value="DELETE" />
 							<c:param name="customerId" value="${aCustomer.id}" />
 						</c:url>
 						<tr>
@@ -53,7 +59,8 @@
 							<td> ${aCustomer.lastName} </td>
 							<td> ${aCustomer.email} </td>
 							<td>
-								<a href="${tempLink}">Update</a>	
+								<a href="${updateLink}">Update</a> |	
+								<a href="${deleteLink}">Delete</a>	
 							</td>
 						</tr>
 					</c:forEach>
