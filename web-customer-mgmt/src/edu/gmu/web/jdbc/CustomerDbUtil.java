@@ -234,4 +234,71 @@ public class CustomerDbUtil {
 			close(myConn, myStmt, null);
 		}
 	}
+
+	public static List<Customer> searchCustomers(String theSearchName) throws Exception {
+		
+		List<Customer> customers = new ArrayList<>();
+        
+    	Connection myConn = null;
+    	PreparedStatement myStmt = null;
+    	ResultSet myRs = null;
+    	
+    	int customerId;
+    
+    	try {
+        		// get connection to database
+        		myConn = dataSource.getConnection();
+        
+        		// only search by name if theSearchName is not empty
+        		if (theSearchName != null && theSearchName.trim().length() > 0) {
+        			
+            		// create sql to search for students by name
+            		String sql = "select * from customer " +
+            					"where lower(first_name) like ? " +
+            					"or lower(last_name) like ?";
+            		
+            		// create prepared statement
+            		myStmt = myConn.prepareStatement(sql);
+
+            		// set params
+            		String theSearchNameLike = "%" + theSearchName.toLowerCase() + "%";
+            		myStmt.setString(1, theSearchNameLike);
+            		myStmt.setString(2, theSearchNameLike);
+            
+        		} 
+        		else {
+            		// create sql to get all students
+            		String sql = "select * from customer order by last_name";
+            
+            		//create prepared statement
+            		myStmt = myConn.prepareStatement(sql);
+        		}
+        
+        		// execute statement
+        		myRs = myStmt.executeQuery();
+        
+        		// retrieve data from result set row
+        		while (myRs.next()) {
+            
+            		// retrieve data from result set row
+            		int id = myRs.getInt("id");
+            		String firstName = myRs.getString("first_name");
+            		String lastName = myRs.getString("last_name");
+            		String email = myRs.getString("email");
+            
+            		// create new student object
+            		Customer tempStudent = new Customer(id, firstName, lastName, email);
+            
+            		// add it to the list of students
+            		customers.add(tempStudent);            
+        		}
+        
+        		return customers;
+    	}
+    	finally {
+        		// clean up JDBC objects
+        		close(myConn, myStmt, myRs);
+    	}
+
+	}
 }
