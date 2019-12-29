@@ -14,7 +14,7 @@
 	<div id="container">
 		<h3>Add Customer</h3>
 		<hr/>
-		<form action="CustomerControllerServlet" method="GET">
+		<form action="CustomerControllerServlet" method="POST">
 			<input type="hidden" name="command" value="ADD" />
 			<table>
 				<tbody>
