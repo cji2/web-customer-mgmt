@@ -40,7 +40,29 @@ public class CustomerControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		try {
+			// read the "command" parameter
+			String theCommand = request.getParameter("command");
+					
+			// route to the appropriate method
+			switch (theCommand) {
+							
+			case "ADD":
+				addCustomer(request, response);
+				break;
+								
+			default:
+				listCustomers(request, response);
+			}
+				
+		}
+		catch (Exception exc) {
+			throw new ServletException(exc);
+		}
+		
+	}
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -61,12 +83,12 @@ public class CustomerControllerServlet extends HttpServlet {
 				// list the customers .. in MVC fashion.
 				listCustomers(request, response);
 				break;
-				
+			/*	
 			case "ADD":
 				// add a new customer.
 				addCustomer(request, response);
 				break;
-			
+			*/
 			case "LOAD":
 				// load a customer with id, which is selected by update link.
 				loadCustomer(request, response);
@@ -152,8 +174,13 @@ public class CustomerControllerServlet extends HttpServlet {
 		// add the customer to the database.
 		CustomerDbUtil.addCustomer(aCustomer);
 		
-		// send back to main page (the customer list)
+		/*// send back to main page (the customer list)
 		listCustomers(request, response);
+		*/
+		// send back to main page (the student list)
+		// SEND AS REDIRECT to avoid multiple-browser reload issue
+		response.sendRedirect(request.getContextPath() + "/CustomerControllerServlet?command=LIST");
+
 	}
 
 	private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws Exception {
