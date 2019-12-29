@@ -102,6 +102,10 @@ public class CustomerControllerServlet extends HttpServlet {
 				deleteCustomer(request, response);
 				break;
 			
+			case "SEARCH":
+				searchCustomer(request, response);
+				break;
+				
 			default:
 				listCustomers(request, response);
 			}
@@ -114,6 +118,22 @@ public class CustomerControllerServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
+	private void searchCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// read search name from form data
+        String theSearchName = request.getParameter("theSearchName");
+        
+        // search students from db util
+        List<Customer> customers = CustomerDbUtil.searchCustomers(theSearchName);
+        
+        // add students to the request
+        request.setAttribute("CUSTOMER_LIST", customers);
+                
+        // send to JSP page (view)
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/list-customers.jsp");
+        dispatcher.forward(request, response);
+
+	}
 	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// read customer info. from form data.
