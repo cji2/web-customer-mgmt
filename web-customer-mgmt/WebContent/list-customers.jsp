@@ -33,7 +33,12 @@
 			   		   onclick="window.location.href='add-customer-form.jsp'; return false;"
 			   		   class="add-customer-button"
 				/>
-				
+				<!-- add a search box -->
+				<form action="CustomerControllerServlet" method="GET">
+					<input type="hidden" name="command" value="SEARCH" />
+					Search Customer: <input type="text" name="theSearchName" />
+					<input type="submit" value="Search" class="add-customer-button" />
+				</form>
 				<table>
 					<tr>
 						<th>First Name</th>
